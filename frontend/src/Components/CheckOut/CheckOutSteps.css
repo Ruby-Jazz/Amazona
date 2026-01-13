@@ -1,0 +1,16 @@
+.checkout-steps > div {
+    border-top: 0.3rem solid #c0c0c0;
+    padding: 1rem;
+    color: #c0c0c0;
+    flex: 1;
+    font-weight: bold;
+}
+
+.checkout-steps >div.active {
+    color: #f08000;
+    border-top-color: #f08000;
+}
+
+.checkout-steps div .link {
+    color: #f08000;
+}

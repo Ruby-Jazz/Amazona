@@ -1,0 +1,18 @@
+.form {
+    max-width: 60rem;
+    margin: 0 auto;
+}
+
+.form > div {
+    display: flex;
+    flex-direction: column;
+    margin: 0 1rem;
+}
+
+.form label {
+
+    margin: .2rem 0;
+}
+.form h1 {
+    margin: .3rem;
+}
