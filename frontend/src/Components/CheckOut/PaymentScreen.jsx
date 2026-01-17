@@ -42,26 +42,6 @@ const PaymentScreen = () => {
         <label htmlFor='paypal'>PayPal</label>
     </div>
     </div>
-  <div> <div>
-        <input type="radio" id='opay'
-        name='paymentMethod'
-        value='Opay'
-        checked={paymentMethod === 'Opay'} 
-        onChange={e=>setPaymentMethod(e.target.value)}/>
-        <label htmlFor='opay'>Opay</label>
-    </div>
-    </div> 
-   <div>
-     <div>
-        <input type="radio" id='palmpay'
-        name='paymentMethod'
-        value='Palmpay'
-        checked={paymentMethod === 'Palmpay'}
-        onChange={e=>setPaymentMethod(e.target.value)}/>
-        <label htmlFor='palmpay'>Palmpay</label>
-    </div>
-   </div>
-   
     <div>
         <button className='primary'>Continue</button>
     </div>
