@@ -10,7 +10,20 @@ dotenv.config();
 const app = express();
 app.use(express.json());
 app.use(express.urlencoded({extended:true}))
-app.use(cors())
+app.use(cors({
+  origin: (origin, callback) => {
+    // Allow requests with no origin (like mobile apps or curl)
+    if (!origin) return callback(null, true);
+
+    // Allow any subdomain of vercel.app and your local development
+    if (origin.endsWith('.vercel.app') || origin.includes('localhost')) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+  credentials: true // Crucial if you are using cookies/sessions for login
+}));
 mongoose.connect(process.env.MONGODB_URL).then(()=>console.log('connected to MongoDb')).catch((err)=>console.log(err.reason));
 app.use('/api/users', userRouter)
 app.use('/api/products',productRouter)
