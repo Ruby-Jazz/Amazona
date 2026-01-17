@@ -1,12 +1,12 @@
 import {createAsyncThunk, createSlice} from '@reduxjs/toolkit'
-import axios from 'axios'
+import api from '../api';
 export const payOrder = createAsyncThunk(
     'order,payOrder',
     async({order,paymentResult},{getState,rejectWithValue})=>{
 
         try {
             const {auth : {userInfo}}= getState();
-            const {data} = await axios.put(`/api/orders/${order._id}/pay`, paymentResult,{
+            const {data} = await api.put(`/api/orders/${order._id}/pay`, paymentResult,{
     headers : {
         authorization : `Bearer ${userInfo.token}`
     }})

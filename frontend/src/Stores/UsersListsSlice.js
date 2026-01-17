@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import axios from "axios";
+import api from "../api";
 
 export const getUsersLists = createAsyncThunk(
   'admin/getUsersLists',
@@ -14,7 +14,7 @@ export const getUsersLists = createAsyncThunk(
         },
       };
 
-      const { data } = await axios.get('/api/users/userslists', config);
+      const { data } = await api.get('/api/users/userslists', config);
       return data;
     } catch (error) {
       // Improved error extraction

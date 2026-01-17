@@ -1,5 +1,5 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import axios from 'axios';
+import api from '../api';
 
 export const createProduct = createAsyncThunk(
   'products/createOrUpdate',
@@ -19,7 +19,7 @@ export const createProduct = createAsyncThunk(
 
       if (product._id) {
         // 🔁 UPDATE
-        response = await axios.put(
+        response = await api.put(
           `/api/products/${product._id}`,
           formData,
           {
@@ -30,7 +30,7 @@ export const createProduct = createAsyncThunk(
         );
       } else {
         // ➕ CREATE
-        response = await axios.post(
+        response = await api.post(
           '/api/products',
           formData,
           {

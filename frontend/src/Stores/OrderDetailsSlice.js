@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import axios from "axios";
+import api from "../api";
 
 
 export const orderDetails = createAsyncThunk(
@@ -7,7 +7,7 @@ export const orderDetails = createAsyncThunk(
     async (order,{getState,rejectWithValue})=> {
         try {
             const {auth : {userInfo}} = getState();
-            const {data} = await axios.get(`/api/orders/${order}` ,{
+            const {data} = await api.get(`/api/orders/${order}` ,{
                 headers : {
                     authorization : `Bearer ${userInfo.token}`
                 }

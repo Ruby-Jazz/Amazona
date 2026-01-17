@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import axios from "axios";
+import api from "../api";
 
 
 export const getUserProfile = createAsyncThunk(
@@ -8,7 +8,7 @@ export const getUserProfile = createAsyncThunk(
 
         try {
             const {auth: {userInfo}}= getState();
-            const {data} = await axios.get(`/api/users/${userId}`,{headers : {authorization : `Bearer ${userInfo.token}`}});
+            const {data} = await api.get(`/api/users/${userId}`,{headers : {authorization : `Bearer ${userInfo.token}`}});
             return data;
         } catch (error) {
             const err = error.response && error.response.data.message? error.response.data.message : error.message;
@@ -22,7 +22,7 @@ export const updateUserProfile = createAsyncThunk(
     async(user,{rejectWithValue,getState})=>{
         try {
               const {auth: {userInfo}}= getState();
-            const {data} = await axios.put(`/api/users/profile`,user, {headers : {authorization : `Bearer ${userInfo.token}`}});
+            const {data} = await api.put(`/api/users/profile`,user, {headers : {authorization : `Bearer ${userInfo.token}`}});
             return data;
         } catch (error) {
               const err = error.response && error.response.data.message? error.response.data.message : error.message;

@@ -4,11 +4,17 @@ import userRouter from './Routers/UserRouter.js';
 import dotenv from 'dotenv'
 import productRouter from './Routers/ProductRouter.js';
 import orderRouter from './Routers/OrderRouter.js';
+import cors from 'cors'
 dotenv.config();
  const port = process.env.port;
 const app = express();
 app.use(express.json());
 app.use(express.urlencoded({extended:true}))
+const corsOptions = {
+    origin : 'https://amazona-udid.vercel.app',
+    credentials : true,
+}
+app.use(cors(corsOptions))
 mongoose.connect(process.env.MONGODB_URL).then(()=>console.log('connected to MongoDb')).catch((err)=>console.log(err.reason));
 app.use('/api/users', userRouter)
 app.use('/api/products',productRouter)

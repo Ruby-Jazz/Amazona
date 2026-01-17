@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import axios from 'axios';
+import api from '../api';
 import { logout } from './AuthSlice';
 export const addToCart = createAsyncThunk(
     'cartScreen/addToCart',
@@ -16,7 +16,7 @@ export const addToCart = createAsyncThunk(
                 item = { ...existItem, qty };
             } else {
                 // If item is NEW, fetch details from the server
-                const response = await axios.get(`/api/products/${productId}`);
+                const response = await api.get(`/api/products/${productId}`);
                 const data = response.data;
                 item = {
                     product: data._id,

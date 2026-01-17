@@ -1,5 +1,5 @@
 import { createAsyncThunk} from "@reduxjs/toolkit";
-import axios from "axios";
+import api from "../api";
 import Cookie from 'js-cookie';
 
 export const signInUser = createAsyncThunk(
@@ -8,7 +8,7 @@ export const signInUser = createAsyncThunk(
         try {
             // 1. Use .post instead of .get
             // 2. Pass the data object as the second argument
-            const response = await axios.post('/api/users/signin', { email, password });
+            const response = await api.post('/api/users/signin', { email, password });
             
             const data = response.data;
 

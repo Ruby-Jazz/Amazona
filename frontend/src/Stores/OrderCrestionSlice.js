@@ -1,12 +1,12 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import axios from 'axios';
+import api from '../api';
 
 export const createOrders = createAsyncThunk(
     'cart/createOrders',
     async (order,{getState,rejectWithValue})=> {
         try {
             const {auth : {userInfo}} = getState();
-            const {data} = await axios.post('/api/orders',order ,{
+            const {data} = await api.post('/api/orders',order ,{
                 headers : {
                     authorization : `Bearer ${userInfo.token}`
                 }
