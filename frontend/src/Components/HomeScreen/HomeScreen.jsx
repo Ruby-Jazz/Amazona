@@ -19,7 +19,7 @@ const HomeScreen = () => {
       ) : error ? (
         <MessageBox variant="danger">{error}</MessageBox>
       ) : (
-        products.map(product => (
+       products && products.map(product => (
           <ProductScreen key={product._id} product={product} />
         ))
       )}
