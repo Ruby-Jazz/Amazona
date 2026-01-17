@@ -1,5 +1,7 @@
 import jwt from 'jsonwebtoken'
-
+import { v2 as cloudinary } from 'cloudinary';
+import dotenv from 'dotenv'
+dotenv.config();
  export const generateToken = (user)=>{
   return  jwt.sign(
         {
@@ -40,3 +42,13 @@ export const isAdmin =(req,res,next) =>{
         res.status(401).send({message: 'Invalid Admin Token'})
     }
 }
+
+
+
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET
+});
+console.log("Current Cloudinary Config:", cloudinary.config().api_key);
+export default cloudinary;

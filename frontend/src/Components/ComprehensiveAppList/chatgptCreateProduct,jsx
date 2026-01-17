@@ -1,0 +1,177 @@
+import React, { useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import LoadingBox from '../Loading/LoadingBox';
+import MessageBox from '../Loading/MessageBox';
+import { getProductsLists } from '../../Stores/ProductListsSlice';
+import { createProduct } from '../../Stores/CreateProductSlice';
+
+const ProductsLists = () => {
+  const dispatch = useDispatch();
+
+  const { loading, error, products } = useSelector(
+    state => state.productsLists
+  );
+
+  const [modalVisible, setModalVisible] = useState(false);
+
+  const [formData, setFormData] = useState({
+    id: null,
+    name: '',
+    image: null,
+    brand: '',
+    category: '',
+    description: '',
+    price: '',
+    countInStock: '',
+  });
+
+  const inputs = [
+    { label: 'Name', type: 'text', name: 'name', placeholder: 'product name' },
+    { label: 'Image', type: 'file', name: 'image' },
+    { label: 'Brand', type: 'text', name: 'brand', placeholder: 'product brand' },
+    { label: 'Category', type: 'text', name: 'category', placeholder: 'product category' },
+    { label: 'Description', type: 'text', name: 'description', placeholder: 'product description' },
+    { label: 'Price', type: 'number', name: 'price', placeholder: 'product price' },
+    { label: 'Count In Stock', type: 'number', name: 'countInStock', placeholder: 'product count' },
+  ];
+
+  const openCreateModal = () => {
+    setFormData({
+      id: null,
+      name: '',
+      image: null,
+      brand: '',
+      category: '',
+      description: '',
+      price: '',
+      countInStock: '',
+    });
+    setModalVisible(true);
+  };
+
+  const openEditModal = (product) => {
+    setFormData({
+      id: product._id,
+      name: product.name,
+      image: null,
+      brand: product.brand,
+      category: product.category,
+      description: product.description,
+      price: product.price,
+      countInStock: product.countInStock,
+    });
+    setModalVisible(true);
+  };
+
+  const handleChange = (e) => {
+    const { name, value, type, files } = e.target;
+    setFormData(prev => ({
+      ...prev,
+      [name]: type === 'file' ? files[0] : value
+    }));
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    // for now, both create & update use createProduct
+    dispatch(createProduct(formData));
+
+    setModalVisible(false);
+  };
+
+  useEffect(() => {
+    dispatch(getProductsLists());
+  }, [dispatch]);
+
+  return (
+    <div>
+      <h1>Products List</h1>
+
+      {loading ? (
+        <LoadingBox />
+      ) : error ? (
+        <MessageBox variant="danger">{error}</MessageBox>
+      ) : (
+        <>
+          <button
+            className="button primary"
+            onClick={openCreateModal}
+          >
+            Create Product
+          </button>
+
+          {modalVisible && (
+            <div>
+              <form className="form" onSubmit={handleSubmit}>
+                {inputs.map(input => (
+                  <div key={input.name}>
+                    <label>{input.label}</label>
+                    <input
+                      {...input}
+                      onChange={handleChange}
+                      value={
+                        input.type !== 'file'
+                          ? formData[input.name]
+                          : undefined
+                      }
+                    />
+                  </div>
+                ))}
+
+                <button className="primary">
+                  {formData.id ? 'Update Product' : 'Create Product'}
+                </button>
+              </form>
+            </div>
+          )}
+
+          <table className="table">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>NAME</th>
+                <th>BRAND</th>
+                <th>IMAGE</th>
+                <th>PRICE</th>
+                <th>STOCK</th>
+                <th>ACTIONS</th>
+              </tr>
+            </thead>
+            <tbody>
+              {products.map(product => (
+                <tr key={product._id}>
+                  <td>{product._id}</td>
+                  <td>{product.name}</td>
+                  <td>{product.brand}</td>
+                  <td>
+                    <img
+                      src={product.image}
+                      alt={product.name}
+                      className="small"
+                    />
+                  </td>
+                  <td>${product.price.toFixed(2)}</td>
+                  <td>{product.countInStock}</td>
+                  <td>
+                    <button
+                      className="small"
+                      onClick={() => openEditModal(product)}
+                    >
+                      Edit
+                    </button>
+                    <button className="small">
+                      Delete
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </>
+      )}
+    </div>
+  );
+};
+
+export default ProductsLists;
