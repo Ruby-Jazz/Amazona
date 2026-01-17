@@ -4,7 +4,7 @@ import LoadingBox from '../Loading/LoadingBox'
 import MessageBox from '../Loading/MessageBox'
 import { useNavigate } from 'react-router-dom'
 import { getOrderHistory } from '../../Stores/OrderhistorySlice'
-import './orderHistory.css'
+import './OrderHistory.css'
 const OrderHistory = () => {
     const {loading,error,orders} = useSelector(state=> state.orderHistory);
 const navigate = useNavigate();
