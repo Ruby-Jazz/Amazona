@@ -6,7 +6,7 @@ export const addToCart = createAsyncThunk(
     async ({ productId, qty }, { getState, rejectWithValue }) => {
         try {
             const { cartScreen: { cartItems } } = getState();
-            const existItem = cartItems.find((x) => x.id === productId);
+            const existItem = cartItems.find((x) => x.product === productId);
 
             let item;
 
@@ -31,7 +31,7 @@ export const addToCart = createAsyncThunk(
 
             // Generate the updated array
             const updatedCart = existItem
-                ? cartItems.map((x) => (x.id === productId ? item : x))
+                ? cartItems.map((x) => (x.product === productId ? item : x))
                 : [...cartItems, item];
 
             // Sync with LocalStorage
@@ -72,7 +72,7 @@ const cartScreenSlice = createSlice({
 
     reducers: {
         removeFromCart: (state, action) => {
-            state.cartItems = state.cartItems.filter((x) => x.id !== action.payload);
+            state.cartItems = state.cartItems.filter((x) => x.product !== action.payload);
             localStorage.setItem('cartItems', JSON.stringify(state.cartItems));
         },
         saveToShipping : (state,action) => {

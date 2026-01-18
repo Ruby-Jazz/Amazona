@@ -4,12 +4,12 @@ import { Link, useParams } from 'react-router-dom';
 import LoadingBox from '../Loading/LoadingBox';
 import MessageBox from '../Loading/MessageBox';
 import {  orderDetails } from '../../Stores/OrderDetailsSlice';
-import axios from 'axios';
 import {
   PayPalScriptProvider,
   PayPalButtons,
 } from '@paypal/react-paypal-js';
 import { orderPayReset, payOrder } from '../../Stores/PayOrderSlice';
+import api from '../../api';
 
 const OrderDetailsScreen = () => {
   const { loading, error, order } = useSelector(
@@ -31,7 +31,7 @@ const OrderDetailsScreen = () => {
 useEffect(() => {
   if (order?.paymentMethod === 'PayPal' && !order.isPaid) {
     const getClientId = async () => {
-      const { data } = await axios.get('/api/config/paypal');
+      const { data } = await api.get('/api/config/paypal');
       setClientId(data);
     };
     getClientId();

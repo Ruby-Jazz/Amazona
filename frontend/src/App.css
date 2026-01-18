@@ -173,8 +173,12 @@ img.large {
     border-radius: 0.5rem;
     margin-top: 0.4rem;
 }
-
-
-.dropdown:hover .dropdown-content{
+.dropdown-content.display {
     display: block;
 }
+.dropdown-content.nodisplay {
+    display: none;
+}
+
+
+

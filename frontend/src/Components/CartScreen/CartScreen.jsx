@@ -16,9 +16,9 @@ const navigate = useNavigate();
     navigate('/cart', { replace: true });
   }
   },[dispatch,id,qty])
-  const handleRemoveFromCart = (id)=>{
-    if(id) {
-      dispatch(removeFromCart(id))
+  const handleRemoveFromCart = (cartid)=>{
+    if(cartid) {
+      dispatch(removeFromCart(cartid))
     }
   }
   const handleCheckOut = ()=>{
@@ -37,10 +37,10 @@ const navigate = useNavigate();
     <img src={x.image} alt={x.name} className='small' />
   </div>
   <div className="min-30">
-    <Link to={`/product/${x.id}`}>{x.name}</Link>
+    <Link to={`/product/${x.product}`}>{x.name}</Link>
   </div>
   <div>
-    <select value={x.qty} onChange={e=>dispatch(addToCart({productId:x.id,qty:Number(e.target.value)}))}>
+    <select value={x.qty} onChange={e=>dispatch(addToCart({productId:x.product,qty:Number(e.target.value)}))}>
       {[...Array(x.countInStock).keys()].map(x =>
                             <option key={x+1} value={x+1}>{x+1}</option>
                           )}
@@ -48,7 +48,7 @@ const navigate = useNavigate();
   </div>
   <div>${x.price}</div>
   <div>
-    <button onClick={()=>handleRemoveFromCart(x.id)}>Delete</button>
+    <button onClick={()=>handleRemoveFromCart(x.product)}>Delete</button>
   </div>
 </div>
             </li>

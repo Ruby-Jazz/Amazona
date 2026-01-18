@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Link, Route, Routes, useNavigate} from 'react-router-dom'
 import './App.css'
 import HomeScreen from './Components/HomeScreen/HomeScreen'
@@ -29,6 +29,10 @@ const handleLogOut = ()=>{
   dispatch(logout());
   navigate('/signin')
 }
+const [displayDropDown, setDisplayDropDown] = useState(false)
+const closeMenu = ()=>{
+  setDisplayDropDown(false)
+}
   return (
   
      <div className="grid-container">
@@ -41,16 +45,16 @@ const handleLogOut = ()=>{
     </Link>
   {userInfo ? (
   <div className="dropdown">
-    <Link to="/profile" className="dropdown-toggle">
+    <Link to='#' className='dropdown-toggle'>
       {userInfo.name} <i className="fa-solid fa-caret-down"></i>
     </Link>
 
-    <ul className="dropdown-content">
+    <ul className={`dropdown-content ${displayDropDown ? 'display' : 'nodisplay'}`}>
       <li>
-        <Link to="/profile">Profile</Link>
+        <Link onClick={closeMenu} to="/profile">Profile</Link>
       </li>
       <li>
-        <Link to='/orderhistory'>Order History</Link>
+        <Link onClick={closeMenu} to='/orderhistory'>Order History</Link>
       </li>
       <li>
         <button type="button" onClick={handleLogOut} >
@@ -65,22 +69,22 @@ const handleLogOut = ()=>{
 
 {userInfo && userInfo.isAdmin && (
    <div className="dropdown">
-    <Link to="/#admin" className="dropdown-toggle">
-      Admin <i className="fa-solid fa-caret-down"></i>
+   <Link to='#' className='dropdown-toggle'>
+     Admin <i className="fa-solid fa-caret-down"></i>
     </Link>
 
-    <ul className="dropdown-content">
+    <ul className={`dropdown-content ${displayDropDown ? 'display' : 'nodisplay'}`}>
       <li>
-        <Link to="/dashboard">Dashboard</Link>
+        <Link onClick={closeMenu} to="/dashboard">Dashboard</Link>
       </li>
       <li>
-        <Link to="/productslist">Products</Link>
+        <Link onClick={closeMenu} to="/productslist">Products</Link>
       </li>
       <li>
-        <Link to="/orderslist">Orders</Link>
+        <Link onClick={closeMenu} to="/orderslist">Orders</Link>
       </li>
       <li>
-        <Link to='/userslist'>Users</Link>
+        <Link onClick={closeMenu} to='/userslist'>Users</Link>
       </li>
       
     </ul>
