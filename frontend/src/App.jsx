@@ -28,12 +28,16 @@ const App = () => {
 const handleLogOut = ()=>{
   dispatch(logout());
   navigate('/signin')
+  setAdminMenu(false);
+  setUserMenu(false)
 }
-const [displayDropDown, setDisplayDropDown] = useState(false)
+const [userMenu, setUserMenu] = useState(false);
+const [adminMenu, setAdminMenu] = useState(false);
 const closeMenu = ()=>{
-  setDisplayDropDown(false)
+  setUserMenu(false)
+  setAdminMenu(false)
 }
-const openMenu = ()=>{setDisplayDropDown(true)}
+
   return (
   
      <div className="grid-container">
@@ -46,11 +50,11 @@ const openMenu = ()=>{setDisplayDropDown(true)}
     </Link>
   {userInfo ? (
   <div className="dropdown">
-    <Link to='#' className={`dropdown-toggle ${displayDropDown ? 'display' : 'nodisplay'}`} onClick={openMenu} >
+    <Link to='#' className={`dropdown-toggle `} onClick={()=> {setUserMenu(!userMenu); setAdminMenu(false)}} >
       {userInfo.name} <i className="fa-solid fa-caret-down"></i>
     </Link>
 
-    <ul className={`dropdown-content ${displayDropDown ? 'display' : 'nodisplay'}`}>
+    <ul className={`dropdown-content ${userMenu ? 'display' : 'nodisplay'}`}>
       <li>
         <Link onClick={closeMenu} to="/profile">Profile</Link>
       </li>
@@ -70,14 +74,11 @@ const openMenu = ()=>{setDisplayDropDown(true)}
 
 {userInfo && userInfo.isAdmin && (
    <div className="dropdown">
-   <Link to='#'className={`dropdown-toggle ${displayDropDown ? 'display' : 'nodisplay'}`} onClick={openMenu} >
+   <Link to='#'className={`dropdown-toggle `} onClick={()=>{setAdminMenu(!adminMenu); setUserMenu(false)}} >
      Admin <i className="fa-solid fa-caret-down"></i>
     </Link>
 
-    <ul className={`dropdown-content ${displayDropDown ? 'display' : 'nodisplay'}`}>
-      <li>
-        <Link onClick={closeMenu} to="/dashboard">Dashboard</Link>
-      </li>
+    <ul className={`dropdown-content ${adminMenu ? 'display' : 'nodisplay'}`}>
       <li>
         <Link onClick={closeMenu} to="/productslist">Products</Link>
       </li>
