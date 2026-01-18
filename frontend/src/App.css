@@ -173,12 +173,16 @@ img.large {
     border-radius: 0.5rem;
     margin-top: 0.4rem;
 }
-.dropdown-content.display {
+.display {
     display: block;
 }
-.dropdown-content.nodisplay {
+.nodisplay {
     display: none;
 }
 
 
-
+@media (max-width : 420px) {
+header  {
+font-size: 12px;
+}
+}

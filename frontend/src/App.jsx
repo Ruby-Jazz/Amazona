@@ -33,6 +33,7 @@ const [displayDropDown, setDisplayDropDown] = useState(false)
 const closeMenu = ()=>{
   setDisplayDropDown(false)
 }
+const openMenu = ()=>{setDisplayDropDown(true)}
   return (
   
      <div className="grid-container">
@@ -45,7 +46,7 @@ const closeMenu = ()=>{
     </Link>
   {userInfo ? (
   <div className="dropdown">
-    <Link to='#' className='dropdown-toggle'>
+    <Link to='#' className={`dropdown-toggle ${displayDropDown ? 'display' : 'nodisplay'}`} onClick={openMenu} >
       {userInfo.name} <i className="fa-solid fa-caret-down"></i>
     </Link>
 
@@ -69,7 +70,7 @@ const closeMenu = ()=>{
 
 {userInfo && userInfo.isAdmin && (
    <div className="dropdown">
-   <Link to='#' className='dropdown-toggle'>
+   <Link to='#'className={`dropdown-toggle ${displayDropDown ? 'display' : 'nodisplay'}`} onClick={openMenu} >
      Admin <i className="fa-solid fa-caret-down"></i>
     </Link>
 
